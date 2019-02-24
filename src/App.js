@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Navbar from './components/Navbar'
 import Home from './containers/Home'
-import Video from './containers/Video'
+import VideoPlayer from './containers/Video'
 import Search from './containers/Search'
 import Userlist from './containers/UserList'
 import FeedList from './containers/FeedList'
@@ -14,8 +14,8 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-      video:'',
-      search:'',
+      videoID:'',
+      search:'ariana grande',
       users:[{name:'syed',
               feed:[]
             }]
@@ -25,7 +25,7 @@ class App extends Component {
   //use this function to update the class
   //param is object that has property to update and value
   changeState = (obj) =>{
-    this.setState(obj)
+    this.setState(obj,()=>console.log(this.state))
   }
   
   render() {
@@ -33,8 +33,11 @@ class App extends Component {
       <>
         <Route path='/' render={()=><Navbar/>} />
         <Route path='/' exact render={()=><Home/>} />
-        <Route path='/video' exact render={()=><Video/>} />
-        <Route path='/search' exact render={()=><Search/>} />
+        
+        {/* Tarek worked on video and search components on 2/23/19 */}
+        <Route path='/video' exact render={()=><VideoPlayer id={this.state.videoID}/>} />
+        <Route path='/search' exact render={()=><Search query={this.state.search} changeState={this.changeState}/>} />
+        
         <Route path='/userlist' exact render={()=><Userlist/>} />
         <Route path='/feedlist' exact render={()=><FeedList/>} />
       </>
